@@ -1,0 +1,208 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .project-wrapper {
+        width: 70%;
+        height: auto;
+        background-color: rgb(5, 100, 50);
+        margin-left: 15%;
+        margin-top: 0px;
+        font-family: cursive;
+      }
+
+      .project-wrapper h1 {
+        background-color: white;
+        border: 1px solid green;
+        padding: 10px;
+        margin: 0px;
+      }
+
+      .project-wrapper h3 {
+        background-color: white;
+        border: 1px solid green;
+        padding: 10px;
+        margin: 0px;
+      }
+
+      .project-wrapper p {
+        color: white;
+        font-size: 20px;
+        margin: 20px;
+      }
+
+      .user-input {
+        height: 45px;
+        width: 100px;
+        min-width: 60px;
+        font-size: 20px;
+        margin: 20px;
+        text-align: center;
+      }
+
+      .submit-button {
+        height: 45px;
+        width: auto;
+        cursor: pointer;
+        background-color: darkgreen;
+        color: white;
+        border: 1px solid white;
+        font-size: 20px;
+        transition: all 0.5s;
+        padding: 0px 10px;
+      }
+
+      .submit-button:hover {
+        background-color: white;
+        color: green;
+        transition: all 0.5s;
+        border: 1px solid rgb(124, 6, 160);
+      }
+
+      #result-placeholder {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 20px;
+        color: rgb(250, 249, 250);
+        margin: 20px;
+        padding-bottom: 20px;
+      }
+
+      #user-num,
+      #user-result,
+      #first-num,
+      #last-num {
+        font-family: Arial, Helvetica, sans-serif;
+        color: rgb(97, 6, 107);
+        font-size: 25px;
+        background-color: white;
+        padding: 2px 10px;
+        font-weight: 600;
+      }
+
+      .yvanaplaceholder {
+        display: flex;
+        text-align: center;
+        justify-content: center;
+      }
+
+      .yvana {
+        color: darkgreen;
+        text-decoration: none;
+      }
+
+      .name {
+        color: crimson;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="project-wrapper">
+      <h1>A simple Calcuation App.</h1>
+      <h3>Input two values and can add, subtract, multiply and divide</h3>
+      <p>
+        First Number : &nbsp; &nbsp;&nbsp;<input
+          class="user-input"
+          id="first-number"
+          type="number"
+        />
+        <br />
+        Second Number :
+        <input id="second-number" class="user-input" type="number" /><br />
+        <button id="add" type="submit" class="submit-button">Add</button>
+        <button id="subtract" type="submit" class="submit-button">
+          Subtract
+        </button>
+        <button id="multiply" type="submit" class="submit-button">
+          Multiply
+        </button>
+        <button id="divide" type="submit" class="submit-button">Divide</button>
+      </p>
+      <div id="result-placeholder"></div>
+    </div>
+
+    <div class="yvanaplaceholder">
+      <a class="yvana" href="https://yvana.org" target="_blank">
+        
+      
+    </div>
+
+    <script>
+      // Error Message Function
+      function displayError(msg) {
+        resultText.innerHTML = msg;
+      }
+
+      // Result Function
+      function displayResult([firstNumber, lastNumber], result) {
+        resultText.innerHTML =
+          'The result is : <span id="user-result">' + result + "</span>";
+      }
+
+      // Validating inputs
+      function validateInputs() {
+        let errorMsg = "";
+        const firstNumber = parseFloat(
+          document.getElementById("first-number").value
+        );
+        const lastNumber = parseFloat(
+          document.getElementById("second-number").value
+        );
+        if (isNaN(firstNumber) || isNaN(lastNumber)) {
+          errorMsg = "Input values should be numbers and not empty.";
+        }
+        return {
+          values: [firstNumber, lastNumber],
+          errorMsg,
+        };
+      }
+
+      // Calclation Functions
+      function addition([num1, num2]) {
+        return num1 + num2;
+      }
+
+      function subtraction([num1, num2]) {
+        return num1 - num2;
+      }
+
+      function multiply([num1, num2]) {
+        return num1 * num2;
+      }
+
+      function divide([num1, num2]) {
+        return num1 / num2;
+      }
+
+      // Main Function //
+      const btnAdd = document.getElementById("add");
+      const btnSub = document.getElementById("subtract");
+      const btnMult = document.getElementById("multiply");
+      const btnDiv = document.getElementById("divide");
+
+      const buttons = [btnAdd, btnSub, btnMult, btnDiv];
+      const resultText = document.getElementById("result-placeholder");
+
+      for (let i = 0; i < buttons.length; i++) {
+        buttons[i].addEventListener("click", function () {
+          const { errorMsg, values } = validateInputs();
+          if (errorMsg) {
+            displayError(errorMsg);
+            resultText.style.color = "aqua";
+          } else {
+            const results = [
+              addition(values),
+              subtraction(values),
+              multiply(values),
+              divide(values),
+            ];
+            const result = results[i];
+            displayResult(values, result);
+            resultText.style.color = "white";
+          }
+        });
+      }
+    </script>
+  </body>
+</html>
